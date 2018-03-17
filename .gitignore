@@ -1,0 +1,11 @@
+bin
+blobstorage
+include
+lib
+man
+selenium
+.Python
+Data.*
+pip-selfcheck.json
+.vscode
+*.log
