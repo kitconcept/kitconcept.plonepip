@@ -1,17 +1,12 @@
 FROM ericof/plone:5.1.0
+LABEL maintainer="kitconcept, GmbH <info@kitconcept.com>"
 
 WORKDIR /plone
 
-COPY requirements.docker.txt /plone/requirements.txt
-COPY createsite.py /plone/createsite.py
+COPY --chown=plone:plone requirements.docker.txt /plone/requirements.txt
+COPY --chown=plone:plone createsite.py /plone/createsite.py
+COPY --chown=plone:plone etc /plone/etc
 
-COPY etc /plone/etc
-RUN ./bin/pip install -r requirements.txt
+RUN ./bin/pip install -r requirements.txt && ./bin/plonecli instance -C /plone/etc/zope.conf run createsite.py
 
-USER root
-RUN chown -R plone:plone /plone/* /plone/.cache /data
-
-USER plone
-RUN ./bin/plonecli instance -C /plone/etc/zope.conf run createsite.py
-
-CMD ["/plone/bin/plonecli", "instance", "-C", "/plone/etc/zope.conf", "fg"]
+# CMD ["/plone/bin/plonecli", "instance", "-C", "/plone/etc/zope.conf", "fg"]
