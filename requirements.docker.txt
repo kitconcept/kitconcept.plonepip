@@ -1,2 +1,2 @@
 plone.rest==1.0.0
-plone.restapi==1.4.0
+plone.restapi==1.4.1
