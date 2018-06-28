@@ -5,6 +5,7 @@ import transaction
 default_extension_profiles = (
     'plone.app.caching:default',
     'plonetheme.barceloneta:default',
+    'collective.folderishtypes.dx:default',
     'plone.restapi:default'
 )
 

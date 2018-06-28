@@ -1,2 +1,4 @@
-plone.rest==1.0.0
-plone.restapi==2.0.0
+plone.rest==1.1.1
+plone.restapi==3.2.1
+plone.schema==1.2.0
+collective.folderishtypes==2.1
