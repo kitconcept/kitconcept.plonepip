@@ -1,6 +1,9 @@
+from plone.dexterity.interfaces import IDexterityFTI
 from Products.CMFPlone.factory import addPloneSite
+from zope.component import queryUtility
 
 import transaction
+
 
 default_extension_profiles = (
     'plone.app.caching:default',
@@ -10,5 +13,11 @@ default_extension_profiles = (
 )
 
 addPloneSite(app, 'Plone', extension_ids=default_extension_profiles)
+
+# Add Tiles behavior to Document FTI
+fti = queryUtility(IDexterityFTI, name='Document', context=app['Plone'])
+behavior_list = [a for a in fti.behaviors]
+behavior_list.append('plone.tiles')
+fti.behaviors = tuple(behavior_list)
 
 transaction.commit()
