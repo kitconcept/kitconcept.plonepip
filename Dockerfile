@@ -1,16 +1,32 @@
-FROM ericof/plone:5.1.0
+FROM python:2.7-slim
 LABEL maintainer="kitconcept, GmbH <info@kitconcept.com>"
+
+RUN mkdir -p /plone/docs /plone/logs /plone/.cache /data
+ENV PWD=/plone
+ENV XDG_CACHE_HOME=/plone/.cache
 
 WORKDIR /plone
 
-COPY --chown=plone:plone requirements.docker.txt /plone/requirements.txt
-COPY --chown=plone:plone createsite.py /plone/createsite.py
-COPY --chown=plone:plone etc /plone/etc
+RUN pip install -U setuptools pip virtualenv && virtualenv .
 
-USER root
-RUN mkdir /plone/docs && chown plone:plone /plone/docs
+COPY requirements/ /plone/requirements
+COPY admin.* /plone/
+COPY createsite.py /plone/createsite.py
+COPY etc /plone/etc
+
+ENV buildDeps="python-dev build-essential libssl-dev libbz2-dev"
+ENV runDeps="libmagic-dev"
+RUN  apt-get update && apt-get install -y --no-install-recommends $buildDeps && \
+     apt-get install -y --no-install-recommends $runDeps && \
+     ./bin/pip install -r /plone/requirements/requirements.txt && \
+     SUDO_FORCE_REMOVE=yes apt-get purge -y --auto-remove $buildDeps  && \
+     rm -rf /var/lib/apt/lists/*
+
+RUN useradd --system -U -u 500 plone && chmod +x admin.sh && \
+    chown -R plone:plone /plone/* /plone/.cache /data
 
 USER plone
-RUN ./bin/pip install -r requirements.txt && ./bin/plonecli instance -C /plone/etc/zope.conf run createsite.py
+RUN ./bin/plonecli instance -C /plone/etc/zope.conf run createsite.py
 
-# CMD ["/plone/bin/plonecli", "instance", "-C", "/plone/etc/zope.conf", "fg"]
+EXPOSE 8080
+CMD "/plone/admin.sh"
