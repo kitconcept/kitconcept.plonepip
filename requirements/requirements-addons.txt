@@ -1,5 +1,5 @@
-plone.rest==1.1.1
-plone.restapi==3.7.0
+plone.rest==1.4.0
+plone.restapi==3.7.5
 plone.schema==1.2.0
 collective.folderishtypes==2.1
 kitconcept.voltodemo==1.0.0a11
