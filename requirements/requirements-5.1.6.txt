@@ -83,7 +83,7 @@ futures==3.1.1
 icalendar==4.0.3
 initgroups==4.0
 jsonschema==2.6.0
-lxml==4.2.1
+lxml==4.6.3
 mailinglogger==3.8.0
 mechanize==0.2.5
 mockup==2.7.7
