@@ -10,7 +10,7 @@ Markdown==2.6.9
 Missing==3.2
 MultiMapping==3.1
 Persistence==2.13.2
-Plone==5.1.0
+Plone==5.2.3
 Products.ATContentTypes==2.3.7
 Products.Archetypes==1.15
 Products.BTreeFolder2==2.14.0
